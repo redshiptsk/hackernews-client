@@ -6,7 +6,7 @@ import { Button, Flex, Skeleton } from "antd";
 
 
 export const NewsList = observer(() => {
-    const { isLoading, setIsLoadig, news, getNews, newsIds, getNewsIds } = useAppStore()
+    const { isLoading, news, getNews, newsIds, getNewsIds } = useAppStore()
     useEffect(() => {
         getNewsIds();
         const refreshInterval = setInterval(() => getNewsIds(), 60000);

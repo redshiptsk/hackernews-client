@@ -1,17 +1,16 @@
 import { Divider, Flex, Typography } from "antd";
 import { observer } from "mobx-react-lite";
 import { Link } from "react-router-dom";
+import type { INews } from "../../../types/types";
 
 type TNewsItemProps = {
     id: number;
-    news: any;
+    news: INews;
 }
 
 export const NewsItem = observer(({ id, news }: TNewsItemProps) => {
-
-
     const date = new Date(news?.time * 1000).toString()
-    
+
     return (
         <>
             <Link to={`${id}`}>
@@ -25,7 +24,7 @@ export const NewsItem = observer(({ id, news }: TNewsItemProps) => {
                         <Typography.Text>Author: {news?.by}</Typography.Text>
                         <Divider type="vertical" />
                         <Typography.Text>Publicated: {date}</Typography.Text>
-                        <Divider type="vertical"/>
+                        <Divider type="vertical" />
                         <Typography.Text>Comments: {news?.kids?.length || '0'}</Typography.Text>
                     </Flex>
                 </Flex>

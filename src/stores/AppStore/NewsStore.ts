@@ -1,4 +1,15 @@
-export const newsStore = (props) => {
+import type { INews } from "../../types/types";
+
+export interface INewsStore {
+  isLoading: boolean,
+  newsIds: number[],
+  news: INews[],
+  setIsLoading: (isLoading: boolean) => void,
+  getNewsIds: () => void,
+  getNews: () => void,
+}
+
+export const newsStore = (): INewsStore => {
   return {
     isLoading: false,
     newsIds: [],
@@ -7,7 +18,7 @@ export const newsStore = (props) => {
       this.isLoading = isLoading;
     },
     getNewsIds: async function () {
-      const fetchedNewsIds = await fetch(
+      const fetchedNewsIds: number[] = await fetch(
         "https://hacker-news.firebaseio.com/v0/newstories.json"
       )
         .then((res) => res.json())
@@ -16,7 +27,7 @@ export const newsStore = (props) => {
     },
     getNews: async function () {
       this.setIsLoading(true)
-      const fetchedNews = Promise.all(this.newsIds.map(async (id) =>       
+      const fetchedNews = Promise.all<INews>(this.newsIds.map(async (id) =>       
         await fetch(`https://hacker-news.firebaseio.com/v0/item/${id}.json`)
           .then((res) => res.json())
           .then((res) => res)
