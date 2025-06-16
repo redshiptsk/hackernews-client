@@ -18,7 +18,7 @@ export const NewsItem = observer(({ id, news }: TNewsItemProps) => {
                     <Typography.Title level={3}>
                         {news?.title}
                     </Typography.Title>
-                    <Flex>
+                    <Flex wrap>
                         <Typography.Text>Raiting: {news?.score}</Typography.Text>
                         <Divider type="vertical" />
                         <Typography.Text>Author: {news?.by}</Typography.Text>

@@ -7,5 +7,6 @@ export interface INews {
     time: number,
     title: string,
     type: string,
-    url: string
+    url: string,
+    text: string
 }

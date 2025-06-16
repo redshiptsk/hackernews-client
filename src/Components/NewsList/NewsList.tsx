@@ -9,7 +9,7 @@ export const NewsList = observer(() => {
     const { isLoading, news, getNews, newsIds, getNewsIds } = useAppStore()
     useEffect(() => {
         getNewsIds();
-        const refreshInterval = setInterval(() => getNewsIds(), 60000);
+        const refreshInterval = setInterval(() => getNewsIds(), 600000);
 
         return (() => clearInterval(refreshInterval));
     }, [])
@@ -18,7 +18,7 @@ export const NewsList = observer(() => {
         getNews();
     }, [newsIds])
 
-    const handleClick = ( ) => {
+    const handleClick = () => {
         getNewsIds();
     }
 
