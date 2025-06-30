@@ -22,15 +22,15 @@ export const CommentSection = observer(({ storyId }: CommentSectionProps) => {
   }, [storyId]);
 
   if (isLoading) {
-    return <div>Loading comments...</div>;
+    return <Typography.Title>Loading comments...</Typography.Title>;
   }
 
   if (commentStore.comments.length === 0) {
-    return <div>No comments yet</div>;
+    return <Typography.Title>No comments yet</Typography.Title>;
   }
 
   return (
-    <Flex vertical align="start" style={{ alignSelf: "start", margin: "0 auto" }}>
+    <Flex vertical align="start" style={{ alignSelf: "start", margin: "0", width: 'auto' }}>
       <Typography.Title level={2} style={{ marginBottom: "20px", color:"#333" }}>Comments</Typography.Title>
       <Button type="primary" onClick={handleLoadComments}>Refresh Comments</Button>    
       {commentStore.comments.map((comment) => (

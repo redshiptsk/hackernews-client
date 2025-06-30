@@ -2,43 +2,59 @@ import { useEffect } from "react";
 import { useAppStore } from "../../stores/AppStore/AppStoreProvider";
 import { observer } from "mobx-react-lite";
 import { NewsItem } from "./ui/NewsItem";
-import { Button, Flex, Skeleton } from "antd";
+import { Button, Flex, Skeleton, Alert } from "antd";
 
+const SKELETON_COUNT = 6;
 
 export const NewsList = observer(() => {
-    const { isLoading, news, getNews, newsIds, getNewsIds } = useAppStore();
+    const { isLoading, news, getNews, newsIds, getNewsIds, error } = useAppStore();
 
     useEffect(() => {
-        getNewsIds();
-        const refreshInterval = setInterval(() => getNewsIds(), 60000);
-
-        return (() => clearInterval(refreshInterval));
-    }, [])
+        const fetchInitialData = async () => {
+            await getNewsIds();
+        };
+        
+        fetchInitialData();
+        const refreshInterval = setInterval(getNewsIds, 60000);
+        return () => clearInterval(refreshInterval);
+    }, [getNewsIds]);
 
     useEffect(() => {
-        getNews();
-    }, [newsIds])
+        if (newsIds.length > 0) {
+            getNews();
+        }
+    }, [newsIds, getNews]);
 
-    const handleClick = () => {
+    const handleRefresh = () => {
         getNewsIds();
+    };
+
+    if (error) {
+        return <Alert message="Error" description={error} type="error" showIcon />;
     }
 
     return (
-        <>
-        <Button type="primary" onClick={handleClick}>Refresh</Button>
-       { news.length ? 
         <Flex vertical>
-            {
-                news.map((elem) => <NewsItem key={elem.id} id={elem.id} news={elem} />)
-            }
-        </Flex> : <>
-        <Skeleton active={true} loading={isLoading}/>
-        <Skeleton active={true} loading={isLoading}/>
-        <Skeleton active={true} loading={isLoading}/>
-        <Skeleton active={true} loading={isLoading}/>
-        <Skeleton active={true} loading={isLoading}/>        
-        <Skeleton active={true} loading={isLoading}/>
-        </>}
-        </>
-    )
-})
+            <Button 
+                type="primary" 
+                onClick={handleRefresh}
+                loading={isLoading}
+                disabled={isLoading}
+            >
+                Refresh
+            </Button>
+            
+            {news.length > 0 && !isLoading ? (
+                <Flex vertical>
+                    {news.map((item) => (
+                        <NewsItem key={item.id} id={item.id} news={item} />
+                    ))}
+                </Flex>
+            ) : (
+                Array.from({ length: SKELETON_COUNT }).map((_, index) => (
+                    <Skeleton key={index} active={isLoading} />
+                ))
+            )}
+        </Flex>
+    );
+});

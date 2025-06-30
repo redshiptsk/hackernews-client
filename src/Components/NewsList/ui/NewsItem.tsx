@@ -3,33 +3,37 @@ import { observer } from "mobx-react-lite";
 import { Link } from "react-router-dom";
 import type { INews } from "../../../types/types";
 
-type TNewsItemProps = {
+type NewsItemProps = {
     id: number;
     news: INews;
-}
+};
 
-export const NewsItem = observer(({ id, news }: TNewsItemProps) => {
-    const date = new Date(news?.time * 1000).toString()
+const formatDate = (timestamp: number): string => {
+    return new Date(timestamp * 1000).toLocaleString();
+};
 
+export const NewsItem = observer(({ id, news }: NewsItemProps) => {
     return (
         <>
             <Link to={`${id}`}>
                 <Flex vertical align="start">
                     <Typography.Title level={3}>
-                        {news?.title}
+                        {news?.title || 'No title'}
                     </Typography.Title>
-                    <Flex wrap>
-                        <Typography.Text>Raiting: {news?.score}</Typography.Text>
+                    <Flex wrap="wrap" gap="small" align="center">
+                        <Typography.Text>Rating: {news?.score || 0}</Typography.Text>
                         <Divider type="vertical" />
-                        <Typography.Text>Author: {news?.by}</Typography.Text>
+                        <Typography.Text>Author: {news?.by || 'Unknown'}</Typography.Text>
                         <Divider type="vertical" />
-                        <Typography.Text>Publicated: {date}</Typography.Text>
+                        <Typography.Text>Published: {formatDate(news?.time)}</Typography.Text>
                         <Divider type="vertical" />
-                        <Typography.Text>Comments: {news?.kids?.length || '0'}</Typography.Text>
+                        <Typography.Text>
+                            Comments: {news?.kids?.length || 0}
+                        </Typography.Text>
                     </Flex>
                 </Flex>
             </Link>
             <Divider />
         </>
     );
-})
+});

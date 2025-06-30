@@ -38,14 +38,14 @@ class CommentStore {
       const response = await fetch(`${HN_API}/item/${commentId}.json`);
       const data = await response.json();
       
-      if (!data || data.deleted || data.dead) {
+      if (!data || data.dead) {
         return null;
       }
 
       const comment = new Comment(
         data.id,
         data.by,
-        data.text,
+        !data.deleted ? data.text : 'Comment deleted',
         data.time,
         data.kids || []
       );

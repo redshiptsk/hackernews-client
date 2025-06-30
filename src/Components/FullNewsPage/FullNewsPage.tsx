@@ -10,6 +10,10 @@ export const FullNewsPage = observer(() => {
     const { id } = useParams();
     const [newsData, setNewsData] = useState<INews | null>(null)
 
+    const formatDate = (timestamp: number): string => {
+    return new Date(timestamp * 1000).toLocaleString();
+    };
+    
     useEffect(() => {
         const fetchNews = async () => {
             fetch(`https://hacker-news.firebaseio.com/v0/item/${id}.json`)
@@ -33,7 +37,7 @@ export const FullNewsPage = observer(() => {
             <Divider type="vertical" />
             <Typography.Text>Author: {newsData?.by}</Typography.Text>
             <Divider type="vertical" />
-            <Typography.Text>Publicated: {date}</Typography.Text>
+            <Typography.Text>Published: {formatDate(newsData?.time)}</Typography.Text>
             <Divider type="vertical" />
             <Typography.Text style={{fontSize: '18px'}}>Comments: {newsData?.kids?.length || '0'}</Typography.Text>
         

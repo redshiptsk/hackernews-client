@@ -22,7 +22,7 @@ function App() {
           <Switch>
             <Route path="/:id" children={<FullNewsPage />} />
             <Route path={`/`}>
-              <Content style={{ width: '80vw' }}>
+              <Content style={{ width: '80vw', alignSelf: 'center' }}>
                 <NewsList />
               </Content>
             </Route>
