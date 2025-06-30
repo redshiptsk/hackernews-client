@@ -12,6 +12,7 @@
   "dependencies": {
     "antd": "^5.26.0",
     "dayjs": "^1.11.13",
+    "html-react-parser": "^5.2.5",
     "mobx": "^6.13.7",
     "mobx-react-lite": "^4.1.0",
     "react": "^19.1.0",

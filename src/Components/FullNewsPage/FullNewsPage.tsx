@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import type { INews } from "../../types/types";
 import Link from "antd/es/typography/Link";
 import { Divider, Flex, Typography } from "antd";
-import { CommentsBlock } from "./ui/CommentsBlock/CommentsBlock";
+import { CommentSection } from "./ui/CommentSection/CommentsSection";
 
 export const FullNewsPage = observer(() => {
     const { id } = useParams();
@@ -17,11 +17,11 @@ export const FullNewsPage = observer(() => {
                 .then((res) => setNewsData(res))
         }
         fetchNews();
-    }, [id])
+    }, [id]);
 
     const date = new Date(newsData?.time * 1000).toString()
     return (
-        <Flex vertical align="start">
+        <Flex vertical  style={{width: '98%', marginLeft: "10px"}} align="flex-start" justify="flex-start">
             <Flex align="center">
                 <NavLink style={{ fontSize: '18px' }} to={'/'}>Go Back</NavLink>
                 <Typography.Title>{newsData?.title}
@@ -36,7 +36,8 @@ export const FullNewsPage = observer(() => {
             <Typography.Text>Publicated: {date}</Typography.Text>
             <Divider type="vertical" />
             <Typography.Text style={{fontSize: '18px'}}>Comments: {newsData?.kids?.length || '0'}</Typography.Text>
-            <CommentsBlock/>
+        
+            <CommentSection storyId={id} />
         </Flex>
     );
 })

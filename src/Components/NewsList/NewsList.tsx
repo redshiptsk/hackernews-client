@@ -6,10 +6,11 @@ import { Button, Flex, Skeleton } from "antd";
 
 
 export const NewsList = observer(() => {
-    const { isLoading, news, getNews, newsIds, getNewsIds } = useAppStore()
+    const { isLoading, news, getNews, newsIds, getNewsIds } = useAppStore();
+
     useEffect(() => {
         getNewsIds();
-        const refreshInterval = setInterval(() => getNewsIds(), 600000);
+        const refreshInterval = setInterval(() => getNewsIds(), 60000);
 
         return (() => clearInterval(refreshInterval));
     }, [])
@@ -25,7 +26,7 @@ export const NewsList = observer(() => {
     return (
         <>
         <Button type="primary" onClick={handleClick}>Refresh</Button>
-       { news.length && !isLoading ? 
+       { news.length ? 
         <Flex vertical>
             {
                 news.map((elem) => <NewsItem key={elem.id} id={elem.id} news={elem} />)

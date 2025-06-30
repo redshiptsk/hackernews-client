@@ -15,8 +15,8 @@ function App() {
   return (
     <AppStoreProvider>
       <Router>
-        <Layout style={{ width: '100vw' }}>
-          <Header style={{ width: '100vw' }}>
+        <Layout style={{ width: '98vw' }}>
+          <Header style={{ width: '98vw' }}>
             <HeaderText />
           </Header>
           <Switch>
